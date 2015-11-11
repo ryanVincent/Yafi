@@ -11,12 +11,12 @@ gulp.task('combine_src', function() {
     .pipe(babel({
           presets: ['es2015']
       }))
-    .pipe(concat('yafi.js'))
-    .pipe(gulp.dest('./build/'));
+    .pipe(concat('jules.js'))
+    .pipe(gulp.dest('./dist/'));
 });
 
 gulp.task('minify', function(){
-  return gulp.src('./build/jules.js')
+  return gulp.src('./dist/jules.js')
     .pipe(minify())
-    .pipe(gulp.dest('./build/jules.min.js'));
+    .pipe(gulp.dest('./dist/'));
 })

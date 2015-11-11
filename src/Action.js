@@ -2,8 +2,8 @@
 
 class Action{
   constructor(payload){
-    this.origin = UNKNOWN;
-    this.type = STANDARD_ACTION;
+    this.origin = 'unknown';
+    this.type = 'default';
     this.payload = payload;
     this.error = false;
   }
