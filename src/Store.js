@@ -52,7 +52,7 @@ class Store {
    * @returns void
    */
   setState(state){
-    utils.deepExtend(this._state, state);
+    utils.merge(this._state, state);
   }
 
   /**

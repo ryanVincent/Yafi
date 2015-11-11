@@ -257,7 +257,7 @@ var Store = (function () {
   }, {
     key: "setState",
     value: function setState(state) {
-      utils.deepExtend(this._state, state);
+      utils.merge(this._state, state);
     }
 
     /**
@@ -336,46 +336,6 @@ var Store = (function () {
 })();
 'use strict';
 
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
-
-var utils = {
-  guid: function guid() {
-    function s4() {
-      return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-    }
-    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
-  },
-  deepExtend: (function (_deepExtend) {
-    function deepExtend(_x) {
-      return _deepExtend.apply(this, arguments);
-    }
-
-    deepExtend.toString = function () {
-      return _deepExtend.toString();
-    };
-
-    return deepExtend;
-  })(function (out) {
-    out = out || {};
-
-    for (var i = 1; i < arguments.length; i++) {
-      var obj = arguments[i];
-
-      if (!obj) continue;
-
-      for (var key in obj) {
-        if (obj.hasOwnProperty(key)) {
-          if (_typeof(obj[key]) === 'object') deepExtend(out[key], obj[key]);else out[key] = obj[key];
-        }
-      }
-    }
-
-    return out;
-  })
-
-};
-'use strict';
-
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -420,4 +380,55 @@ var WebAPI = (function () {
   }]);
 
   return WebAPI;
+})();
+var utils = (function() {
+
+  var guid = function guid() {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+      s4() + '-' + s4() + s4() + s4();
+  };
+
+  var merge = function merge(target, source) {
+
+    /* Merges two (or more) objects,
+       giving the last one precedence */
+
+    if ( typeof target !== 'object' ) {
+        target = {};
+    }
+
+    for (var property in source) {
+
+        if ( source.hasOwnProperty(property) ) {
+
+            var sourceProperty = source[ property ];
+
+            if ( typeof sourceProperty === 'object' ) {
+                target[ property ] = merge( target[ property ], sourceProperty );
+                continue;
+            }
+
+            target[ property ] = sourceProperty;
+
+        }
+
+    }
+
+    for (var a = 2, l = arguments.length; a < l; a++) {
+        merge(target, arguments[a]);
+    }
+
+    return target;
+};
+
+  return {
+    guid: guid,
+    merge: merge
+  };
+
 })();
