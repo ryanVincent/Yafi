@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <button onclick="doStuff()">Do stuff</button>
+  </body>
+  <script src="../src/Dispatcher.js"></script>
+  <script src="../src/Emitter.js"></script>
+  <script src="Constants.js"></script>
+  <script src="../src/WebAPI.js"></script>
+  <script src="../src/Action.js"></script>
+  <script src="../src/Store.js"></script>
+  <script src="../src/Utils.js"></script>
+  <script type="text/javascript">
+
+    var AppDispatcher = new Dispatcher();
+    var AppStore = new Store(AppDispatcher);
+    var WebApi = new WebAPI('/api/v2/', AppDispatcher);
+
+    WebApi.getData = function(){
+      // fake request
+      var promise = new Promise(function(resolve, reject){
+        resolve({say: "hello"});
+      });
+
+      return promise;
+
+    };
+
+    WebApi.addDispatchListener(function(action){
+      switch(action.type){
+        case ActionType.GET_DATA:
+          this.getData()
+            .then(function(data){
+              var dataAction = new Action(data);
+              dataAction.origin = SERVER;
+              dataAction.type = ActionType.SAY_HELLO;
+              AppDispatcher.dispatch(dataAction);
+            });
+          break;
+      }
+    });
+
+    AppStore.handleGreetings = function(action){
+      var payload = action.payload;
+      switch(action.type){
+        case ActionType.SAY_HELLO:
+          this.setState(payload);
+          this.emit('change');
+          break;
+        case ActionType.SAY_GOODBYE:
+          this.setState(payload);
+          this.emit('change');
+          break;
+      };
+    };
+
+    AppStore.handleAllTheThings = function(action){
+      console.log("ALL THE THINGS:");
+      console.log(action);
+    };
+
+    AppStore.addDispatchListener(AppStore.handleGreetings);
+
+    AppStore.addDispatchListener(AppStore.handleAllTheThings);
+
+    AppStore.on('change', function(){
+      var state = AppStore.getState();
+      console.log(state);
+    });
+
+
+
+
+
+    function doStuff(){
+      var action = new Action();
+      action.type = ActionType.GET_DATA;
+      action.origin = USER;
+      AppDispatcher.dispatch(action);
+    }
+
+  </script>
+</html>
