@@ -118,7 +118,7 @@ AppDispatcher.dispatch(action);
 <h2>
 <a id="store" class="anchor" href="#store" aria-hidden="true"><span class="octicon octicon-link"></span></a>Store</h2>
 
-<p>Stores are used to store information about your applications state. They should be regarded as the single source of truth in your application. A Store's state should never be edited by an external source instead the Store should implement it's own methods for manipulating it's state and these methods should be registered with the dispatcher using <code>addDispatchListener(callback)</code> method.</p>
+<p>Stores are used to store information about your applications state. They should be regarded as the single source of truth in your application. A Store's state should never be edited by an external source instead the Store should implement it's own methods for manipulating it's state and these should be registered with the dispatcher using <code>addDispatchListener(callback)</code> method.</p>
 
 <h3>
 <a id="methods-1" class="anchor" href="#methods-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>methods</h3>
@@ -180,7 +180,7 @@ AppDispatcher.dispatch(action);
 <div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> AppDispatcher <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Dispatcher</span>();
 <span class="pl-k">var</span> TodoStore <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Store</span>(AppDispatcher);</pre></div>
 
-<p>create a method that will handle dispatched actions.</p>
+<p>create a function that will handle dispatched actions.</p>
 
 <div class="highlight highlight-source-js"><pre><span class="pl-c1">TodoStore</span>.<span class="pl-en">handleAddItem</span> <span class="pl-k">=</span> <span class="pl-k">function</span>(<span class="pl-smi">action</span>){
   <span class="pl-k">switch</span>(action.<span class="pl-c1">type</span>){
@@ -192,7 +192,7 @@ AppDispatcher.dispatch(action);
   }
 }</pre></div>
 
-<p>Set that method as a dispatch listener</p>
+<p>Set that function as a dispatch listener</p>
 
 <div class="highlight highlight-source-js"><pre>TodoStore.addDispatchListener(TodoStore.handleAddItem);</pre></div>
 
