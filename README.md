@@ -1,2 +1,2 @@
-# Yafi
-Yet Another Flux Implementation
+# jules
+An implementation of the Flux architecture
