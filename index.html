@@ -76,9 +76,9 @@
 </thead>
 <tbody>
 <tr>
-<td>dispatch(action :Object</td>
-<td>Action)</td>
+<td>dispatch(action :Object or Action)</td>
 <td>dispatches an action to any registered callbacks.</td>
+<td>void</td>
 </tr>
 <tr>
 <td>isDispatching()</td>
@@ -124,6 +124,61 @@
 appDispatcher.dispatch(action);
 // -&gt; {say: "hello"}
 </code></pre>
+
+<h2>
+<a id="store" class="anchor" href="#store" aria-hidden="true"><span class="octicon octicon-link"></span></a>Store</h2>
+
+<p>Stores are used to store information about your applications state. They should be regarded as the single source of truth in your application. A Store's state should never be edited by an external source instead the Store should implement it's own methods for manipulating it's state and these methods should be registered with the dispatcher using <code>addDispatchListener(callback)</code> method.</p>
+
+<h3>
+<a id="methods-1" class="anchor" href="#methods-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>methods</h3>
+
+<table>
+<thead>
+<tr>
+<th>Signature</th>
+<th>Description</th>
+<th>Returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>getState()</td>
+<td>Returns the current state of the Store.</td>
+<td>current state of the store.</td>
+</tr>
+<tr>
+<td>setState(state)</td>
+<td>Use this method to update the internal state of the Store. Should only be called from within a callback registered by addDispatchListener.</td>
+<td>void</td>
+</tr>
+<tr>
+<td>addDispatchListener(callback)</td>
+<td>Used to listen for actions coming from the dispatcher.</td>
+<td>token {String} token representing the callback</td>
+</tr>
+<tr>
+<td>removeDispatchListener(token)</td>
+<td>Used to remove a dispatchListener. This listener will no longer be invoked when the Dispatcher dispatches actions to the Stores.</td>
+<td>void</td>
+</tr>
+<tr>
+<td>getDispatcherToken()</td>
+<td>gets the dispatcher token for the store. Can be used by <code>dispatcher.waitFor()</code> to wait for this Store to complete it's callbacks.</td>
+<td>token {String} token representing the Store.</td>
+</tr>
+<tr>
+<td>emit(type)</td>
+<td>Lets any view that is listening know that a change has occured in this store.</td>
+<td>void</td>
+</tr>
+<tr>
+<td>on(type, callback)</td>
+<td>Used by views to listen for updates to the Store via it's emitter.</td>
+<td>void</td>
+</tr>
+</tbody>
+</table>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/ryanVincent">ryanVincent</a></p>
