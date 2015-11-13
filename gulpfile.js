@@ -18,5 +18,5 @@ gulp.task('combine_src', function() {
 gulp.task('minify', function(){
   return gulp.src('./build/jules.js')
     .pipe(minify())
-    .pipe(gulp.dest('./build/'));
+    .pipe(gulp.dest('./build/jules.min.js'));
 })
